@@ -27,9 +27,11 @@ The hub screen shows the run number; 🟢 green = ready, 🔴 red = running, �
 
 ## ✏️ Adding or changing runs
 **Read [HOW_TO_ADD_RUNS.md](HOW_TO_ADD_RUNS.md).** It's a step-by-step, kid-friendly
-guide to editing `main.py` (add a run, change one, reorder, turn one off).
+guide to editing the files in `src/` (add a run, change one, reorder, turn one off).
 
-## Old files
-The single-mission files (`chicken.py`, `Stage.py`, `SoundMixerDragon.py`,
-`BananaBoat 5-12-26`, etc.) are **kept for reference** but are no longer run at the
-table — everything lives in `main.py` now.
+## 👉 What to focus on
+Edit only **`src/`**, then `python3 build.py`. Everything else is generated or old.
+
+## 📦 Old code
+The original single-mission files are moved into **[`archive/`](archive/)** for
+reference only — don't edit them. See `archive/README.md` for what each one became.
