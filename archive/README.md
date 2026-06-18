@@ -10,7 +10,8 @@ with `python3 build.py`. See `../HOW_TO_ADD_RUNS.md`.
 |---|---|---|
 | `Stage.py` | stage spin mission | `src/runs/1-stage.py` |
 | `chicken.py` | chicken hook mission | `src/runs/2-chicken.py` |
-| `SoundMixerDragon.py` | plow mission | `src/runs/3-plow_run.py` |
+| `SoundMixerDragon.py` | plow mission (older meaning) | `src/runs/3-plow_run.py` |
+| `SoundMixerDragon-dragon-version.py` | dragon / sound-mixer lever push | `src/runs/5-dragon.py` |
 | `BananaBoat 5-12-26` | banana boat drive | `src/runs/4-banana_boat.py` |
 | `init.py` | early robot setup test | `src/robot_config.py` |
 | `Untitled` | scratch / unfinished | — |

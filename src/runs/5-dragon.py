@@ -1,4 +1,4 @@
-# Run 2: Chicken  --  drive out to the chicken and pull the hook mission.
+# Run 5: Dragon (Sound Mixer)  --  drive to the lever, push it, come back.
 #
 # This file works BOTH ways:
 #   * Upload it ALONE to test just this mission  -> it runs by itself.
@@ -24,19 +24,15 @@ plow = Motor(Port.E)
 
 
 def run():
-    # arrival to chicken
-    robot.straight(140)
-    robot.turn(-51)
-    robot.straight(280)
-    robot.turn(-8)
+    # go there
+    robot.straight(340)
 
-    # doing the mission
-    hook.run_angle(1000, 7000)
+    # push lever
+    robot.turn(50)
+    robot.turn(-50)
 
-    # return toward home base
-    robot.straight(-280)
-    robot.turn(51)
-    robot.straight(-140)
+    # go back
+    robot.straight(-340)
 
 
 # === STANDALONE (the builder removes this block when merging) ===

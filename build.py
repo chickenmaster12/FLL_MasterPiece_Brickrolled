@@ -39,6 +39,39 @@ def strip_local_imports(text):
     ).strip("\n")
 
 
+# Blocks in a run file that exist ONLY so the file can run by itself.
+# The builder removes them when merging, because main.py sets the robot up once
+# (robot_config.py) and the menu is what calls each run.
+#   SETUP block:      === SETUP ===       ...  === END SETUP ===
+#   STANDALONE block: === STANDALONE ===  ...  === END STANDALONE ===
+BLOCK_PAIRS = [
+    (re.compile(r"^#\s*===+\s*SETUP\b"), re.compile(r"^#\s*===+\s*END SETUP\b")),
+    (re.compile(r"^#\s*===+\s*STANDALONE\b"), re.compile(r"^#\s*===+\s*END STANDALONE\b")),
+]
+
+
+def strip_blocks(text):
+    """Remove every === SETUP ... END SETUP === and === STANDALONE ... END
+    STANDALONE === block (inclusive of the marker lines)."""
+    lines = text.splitlines()
+    out = []
+    skip_until = None
+    for line in lines:
+        if skip_until is not None:
+            if skip_until.match(line):
+                skip_until = None  # drop this END marker line too
+            continue
+        opened = False
+        for start, end in BLOCK_PAIRS:
+            if start.match(line):
+                skip_until = end
+                opened = True
+                break
+        if not opened:
+            out.append(line)
+    return "\n".join(out)
+
+
 def load_run_order():
     # Read the names out of run_order.py without importing pybricks.
     ns = {}
@@ -77,11 +110,15 @@ def build():
                 "ERROR: run_order lists '%s' but src/runs/%s.py does not exist." % (name, name)
             )
         fn = func_name(name)
-        body = strip_local_imports(read(path))
-        # Drop any __all__ export line -- meaningless once flattened into one file.
+        raw = read(path)
+        # 1) remove the self-contained SETUP and STANDALONE blocks
+        body = strip_blocks(raw)
+        # 2) belt-and-suspenders: drop any stray local imports / __all__ lines
+        body = strip_local_imports(body)
         body = "\n".join(
             line for line in body.splitlines() if not line.strip().startswith("__all__")
         )
+        # 3) rename run() so multiple runs don't collide in one file
         body = re.sub(r"\bdef\s+run\s*\(", "def %s(" % fn, body)
         parts.append("# ---- runs/%s.py ----" % name)
         parts.append(body.strip("\n"))
