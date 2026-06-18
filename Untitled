@@ -10,3 +10,5 @@ left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE)
 right_motor = Motor(Port.F)
 robot = DriveBase(left_motor, right_motor,wheel_diameter=63, axle_track=112)
 robot.settings(420, 300, 180, 200)
+
+robot.straight(1000)
