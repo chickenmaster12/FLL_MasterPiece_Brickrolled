@@ -1,5 +1,8 @@
-# Run: Stage  --  drive to the stage, spin the spotlight and play the speaker.
+# Run 1: Stage  --  drive to the stage, spin the spotlight and play the speaker.
 from robot_config import robot, hook, plow
+
+# What this file provides to the rest of the program.
+__all__ = ["run"]
 
 
 def run():

@@ -46,6 +46,13 @@ def load_run_order():
     return ns["RUN_ORDER"]
 
 
+def func_name(run_name):
+    # Turn a file name like "1-stage" into a valid Python function name
+    # like "run_1_stage" (function names can't contain '-').
+    safe = re.sub(r"[^0-9a-zA-Z_]", "_", run_name)
+    return "run_" + safe
+
+
 def build():
     order = load_run_order()
 
@@ -69,12 +76,17 @@ def build():
             raise SystemExit(
                 "ERROR: run_order lists '%s' but src/runs/%s.py does not exist." % (name, name)
             )
+        fn = func_name(name)
         body = strip_local_imports(read(path))
-        body = re.sub(r"\bdef\s+run\s*\(", "def run_%s(" % name, body)
+        # Drop any __all__ export line -- meaningless once flattened into one file.
+        body = "\n".join(
+            line for line in body.splitlines() if not line.strip().startswith("__all__")
+        )
+        body = re.sub(r"\bdef\s+run\s*\(", "def %s(" % fn, body)
         parts.append("# ---- runs/%s.py ----" % name)
-        parts.append(body)
+        parts.append(body.strip("\n"))
         parts.append("")
-        run_funcs.append("run_%s" % name)
+        run_funcs.append(fn)
 
     # 3) the menu (imports stripped)
     parts.append("# ---- menu.py ----")

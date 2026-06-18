@@ -24,30 +24,13 @@ robot.settings(420, 300, 180, 200)
 hook = Motor(Port.A)
 plow = Motor(Port.E)
 
-# ---- runs/chicken.py ----
-# Run: Chicken  --  drive out to the chicken and pull the hook mission.
+# ---- runs/1-stage.py ----
+# Run 1: Stage  --  drive to the stage, spin the spotlight and play the speaker.
+
+# What this file provides to the rest of the program.
 
 
-def run_chicken():
-    # arrival to chicken
-    robot.straight(140)
-    robot.turn(-51)
-    robot.straight(280)
-    robot.turn(-3)
-
-    # doing the mission
-    hook.run_angle(1000, 7000)
-
-    # return toward home base
-    robot.straight(-280)
-    robot.turn(51)
-    robot.straight(-140)
-
-# ---- runs/stage.py ----
-# Run: Stage  --  drive to the stage, spin the spotlight and play the speaker.
-
-
-def run_stage():
+def run_1_stage():
     # drive forward to the stage
     robot.straight(815)
     robot.curve(10, 45)
@@ -66,22 +49,47 @@ def run_stage():
     robot.curve(10, -60)
     robot.straight(-744)
 
-# ---- runs/plow_run.py ----
-# Run: Plow  --  push the plow attachment forward and come back.
+# ---- runs/2-chicken.py ----
+# Run 2: Chicken  --  drive out to the chicken and pull the hook mission.
+
+# What this file provides to the rest of the program.
 
 
-def run_plow_run():
+def run_2_chicken():
+    # arrival to chicken
+    robot.straight(140)
+    robot.turn(-51)
+    robot.straight(280)
+    robot.turn(-3)
+
+    # doing the mission
+    hook.run_angle(1000, 7000)
+
+    # return toward home base
+    robot.straight(-280)
+    robot.turn(51)
+    robot.straight(-140)
+
+# ---- runs/3-plow_run.py ----
+# Run 3: Plow  --  push the plow attachment forward and come back.
+
+# What this file provides to the rest of the program.
+
+
+def run_3_plow_run():
     plow.run_angle(200, 1000)
     robot.straight(250)
     robot.turn(45)
     robot.turn(-45)
     robot.straight(-250)
 
-# ---- runs/banana_boat.py ----
-# Run: Banana Boat  --  drive straight out and back.
+# ---- runs/4-banana_boat.py ----
+# Run 4: Banana Boat  --  drive straight out and back.
+
+# What this file provides to the rest of the program.
 
 
-def run_banana_boat():
+def run_4_banana_boat():
     robot.straight(1000)
     robot.straight(-1000)
 
@@ -140,10 +148,10 @@ def run_menu(RUNS):
 
 # ---- run order + launch ----
 RUNS = [
-    run_chicken,
-    run_stage,
-    run_plow_run,
-    run_banana_boat,
+    run_1_stage,
+    run_2_chicken,
+    run_3_plow_run,
+    run_4_banana_boat,
 ]
 
 run_menu(RUNS)

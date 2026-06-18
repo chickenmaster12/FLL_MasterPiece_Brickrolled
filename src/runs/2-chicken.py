@@ -1,5 +1,8 @@
-# Run: Chicken  --  drive out to the chicken and pull the hook mission.
+# Run 2: Chicken  --  drive out to the chicken and pull the hook mission.
 from robot_config import robot, hook
+
+# What this file provides to the rest of the program.
+__all__ = ["run"]
 
 
 def run():

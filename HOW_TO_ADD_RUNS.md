@@ -13,10 +13,10 @@ file to edit. So: edit small files, then "build".
 src/
   robot_config.py     <- the hub, wheels, and motors (set up ONCE)
   runs/
-    chicken.py        <- one mission per file, each has   def run():
-    stage.py
-    plow_run.py
-    banana_boat.py
+    1-stage.py        <- one mission per file, each has   def run():
+    2-chicken.py
+    3-plow_run.py
+    4-banana_boat.py
   run_order.py        <- the ORDER the runs go in  (you edit this most)
   menu.py             <- the button menu (don't touch)
 build.py              <- the MERGER. Run it to make main.py.
@@ -47,10 +47,12 @@ Screen = the run number that's ready. Light: 🟢 ready, 🔴 running (hands off
 
 ## ✅ Recipe 1: Edit a run that already exists
 
-Open the file in `src/runs/`, e.g. `src/runs/plow_run.py`:
+Open the file in `src/runs/`, e.g. `src/runs/3-plow_run.py`:
 
 ```python
 from robot_config import robot, plow
+
+__all__ = ["run"]   # what this file gives to the program
 
 def run():
     plow.run_angle(200, 1000)
@@ -81,11 +83,13 @@ End every run back near home base.
 
 ## ✅ Recipe 2: Add a brand-new run
 
-**Step A —** make a new file `src/runs/windmill.py`. Start by importing what you
-need from `robot_config`, then write `def run():`
+**Step A —** make a new file `src/runs/5-windmill.py` (number it next in line).
+Import what you need from `robot_config`, declare the export, then write `def run():`
 
 ```python
 from robot_config import robot, hook
+
+__all__ = ["run"]
 
 def run():
     robot.straight(400)
@@ -102,11 +106,11 @@ Rules:
 
 ```python
 RUN_ORDER = [
-    "chicken",
-    "stage",
-    "plow_run",
-    "banana_boat",
-    "windmill",      # <-- added
+    "1-stage",
+    "2-chicken",
+    "3-plow_run",
+    "4-banana_boat",
+    "5-windmill",    # <-- added
 ]
 ```
 
@@ -120,12 +124,15 @@ Just rearrange `src/run_order.py`, then build. Want plow first?
 
 ```python
 RUN_ORDER = [
-    "plow_run",      # now run #1 on the hub screen
-    "chicken",
-    "stage",
-    "banana_boat",
+    "3-plow_run",    # now run #1 on the hub screen
+    "1-stage",
+    "2-chicken",
+    "4-banana_boat",
 ]
 ```
+
+(The number in the file name is just for sorting the folder — the real order is
+whatever order you list them here.)
 
 ---
 
@@ -135,10 +142,10 @@ Put a `#` in front of its line in `src/run_order.py`, then build:
 
 ```python
 RUN_ORDER = [
-    "chicken",
-    # "stage",       # <-- off for now
-    "plow_run",
-    "banana_boat",
+    "1-stage",
+    # "2-chicken",   # <-- off for now
+    "3-plow_run",
+    "4-banana_boat",
 ]
 ```
 
@@ -171,7 +178,7 @@ Plugged into a different port? Change the one line in `robot_config.py` — not 
 ## ⛔ Don't
 
 - ❌ Don't edit `main.py` by hand — it gets overwritten every build. Edit `src/`.
-- ❌ Don't put `()` after names in `run_order.py` (`"chicken"`, in quotes).
+- ❌ Don't put `()` after names in `run_order.py` (`"2-chicken"`, in quotes).
 - ❌ Don't make a new motor inside a run — import `hook`/`plow` from `robot_config`.
 - ❌ Don't forget to run `python3 build.py` after editing.
 

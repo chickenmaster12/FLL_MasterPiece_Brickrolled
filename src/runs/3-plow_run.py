@@ -1,5 +1,8 @@
-# Run: Plow  --  push the plow attachment forward and come back.
+# Run 3: Plow  --  push the plow attachment forward and come back.
 from robot_config import robot, plow
+
+# What this file provides to the rest of the program.
+__all__ = ["run"]
 
 
 def run():
