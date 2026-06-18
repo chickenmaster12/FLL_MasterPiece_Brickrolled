@@ -6,6 +6,15 @@ from pybricks.pupdevices import Motor, ColorSensor, UltrasonicSensor, ForceSenso
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait
+from pybricks.hubs import PrimeHub
+from pybricks.parameters import Button
+
+hub = PrimeHub()
+
+
+hub.system.set_stop_button(None) 
+# OR assign stopping to another combination like left + right
+hub.system.set_stop_button((Button.LEFT, Button.RIGHT))
 
 hub = PrimeHub()
 

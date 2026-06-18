@@ -10,7 +10,7 @@ def run():
     robot.straight(140)
     robot.turn(-51)
     robot.straight(280)
-    robot.turn(-3)
+    robot.turn(-8)
 
     # doing the mission
     hook.run_angle(1000, 7000)

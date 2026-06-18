@@ -20,6 +20,6 @@
 RUN_ORDER = [
     "1-stage",
     "2-chicken",
-    "3-plow_run",
-    "4-banana_boat",
+    # "3-plow_run",
+    # "4-banana_boat",
 ]
