@@ -37,29 +37,50 @@ That rebuilds `main.py`. Then upload `main.py` to the hub like normal.
 
 | Hub button | What it does |
 |---|---|
-| **Center** | Run the run on the screen, drive back to base, then **auto-arm the next run** |
+| **Center** | **Start** the run on the screen. When it finishes, the next run auto-arms. |
 | **Left** | Go **back** one run (redo the previous one) |
 | **Right** | **Skip** the current run without doing it |
+| **Left + Right together** | **EMERGENCY STOP** — kills the program right now |
 
-Screen = the run number that's ready. Light: 🟢 ready, 🔴 running (hands off), 🟠 blinking = a run was stopped safely.
+Screen = the run number that's ready. Light: 🟢 ready, 🔴 running (hands off), 🟠 blinking = a run had an error.
+
+> ⚙️ **Why Left+Right for stop?** Normally the hub uses the **center** button to
+> stop the program — which would stop us from using center to *start* runs. So in
+> `robot_config.py` we move the stop onto **Left+Right pressed together**, freeing
+> center. (To power the hub OFF, hold **center for 3 seconds**.)
+
+### 🧪 Testing just ONE mission
+Each file in `src/runs/` also runs **all by itself**. Upload one file (e.g.
+`2-chicken.py`) straight to the hub and press the run button — it does just that
+mission. No need to build. (The builder strips the by-itself parts when it makes
+`main.py`.)
 
 ---
 
 ## ✅ Recipe 1: Edit a run that already exists
 
-Open the file in `src/runs/`, e.g. `src/runs/3-plow_run.py`:
+Open the file in `src/runs/`, e.g. `src/runs/3-plow_run.py`. Each run file looks
+like this — **you only edit the part inside `def run():`**. Leave the `=== SETUP ===`
+and `=== STANDALONE ===` blocks alone (they're what let the file run by itself):
 
 ```python
-from robot_config import robot, plow
+# === SETUP (the builder removes this when merging) ===
+... robot + motors set up here, don't touch ...
+# === END SETUP ===
 
-__all__ = ["run"]   # what this file gives to the program
 
 def run():
-    plow.run_angle(200, 1000)
+    plow.run_angle(200, 1000)     # <-- EDIT in here
     robot.straight(250)
     robot.turn(45)
     robot.turn(-45)
     robot.straight(-250)
+
+
+# === STANDALONE (the builder removes this when merging) ===
+if __name__ == "__main__":
+    run()
+# === END STANDALONE ===
 ```
 
 Change the numbers/lines inside `run()`. Then **`python3 build.py`**.
@@ -83,24 +104,23 @@ End every run back near home base.
 
 ## ✅ Recipe 2: Add a brand-new run
 
-**Step A —** make a new file `src/runs/5-windmill.py` (number it next in line).
-Import what you need from `robot_config`, declare the export, then write `def run():`
+**Step A —** the easiest way: **copy an existing run file** and rename it, e.g.
+copy `4-banana_boat.py` to `src/runs/5-windmill.py`. That gives you the SETUP and
+STANDALONE blocks for free. Then change only the inside of `def run():`
 
 ```python
-from robot_config import robot, hook
-
-__all__ = ["run"]
-
 def run():
-    robot.straight(400)
+    robot.straight(400)           # <-- your mission goes here
     hook.run_angle(700, 720)
     robot.straight(-400)
 ```
 
 Rules:
-- It MUST be named exactly `def run():` (the builder renames it for you).
-- Import the motors you use from `robot_config` (`robot`, `hook`, `plow`).
+- Keep the function named exactly `def run():` (the builder renames it for you).
+- Use `robot`, `hook`, `plow` — they're already set up in the SETUP block.
 - Indent everything inside `run()` with 4 spaces.
+- Keep the `=== SETUP ===` and `=== STANDALONE ===` blocks so the file still
+  runs by itself for testing.
 
 **Step B —** add the file name (no `.py`) to `src/run_order.py`:
 

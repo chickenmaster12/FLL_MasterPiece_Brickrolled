@@ -15,6 +15,12 @@ from pybricks.tools import wait
 
 hub = PrimeHub()
 
+# Free the CENTER button for our own use (start runs). By default the hub uses
+# CENTER to stop the program, which would block us from using it. We move the
+# built-in STOP to the LEFT+RIGHT buttons pressed together.
+# NOTE: to power the hub off now, hold CENTER for 3 seconds.
+hub.system.set_stop_button((Button.LEFT, Button.RIGHT))
+
 left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE)
 right_motor = Motor(Port.F)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=63, axle_track=112)
@@ -26,8 +32,12 @@ plow = Motor(Port.E)
 
 # ---- runs/1-stage.py ----
 # Run 1: Stage  --  drive to the stage, spin the spotlight and play the speaker.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_1_stage():  -- that's your mission.
 
-# What this file provides to the rest of the program.
 
 
 def run_1_stage():
@@ -51,8 +61,12 @@ def run_1_stage():
 
 # ---- runs/2-chicken.py ----
 # Run 2: Chicken  --  drive out to the chicken and pull the hook mission.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_2_chicken():  -- that's your mission.
 
-# What this file provides to the rest of the program.
 
 
 def run_2_chicken():
@@ -72,8 +86,12 @@ def run_2_chicken():
 
 # ---- runs/3-plow_run.py ----
 # Run 3: Plow  --  push the plow attachment forward and come back.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_3_plow_run():  -- that's your mission.
 
-# What this file provides to the rest of the program.
 
 
 def run_3_plow_run():
@@ -86,22 +104,53 @@ def run_3_plow_run():
 
 # ---- runs/4-banana_boat.py ----
 # Run 4: Banana Boat  --  drive straight out and back.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_4_banana_boat():  -- that's your mission.
 
-# What this file provides to the rest of the program.
 
 
 def run_4_banana_boat():
     robot.straight(1000)
     robot.straight(-1000)
 
+# ---- runs/5-dragon.py ----
+# Run 5: Dragon (Sound Mixer)  --  drive to the lever, push it, come back.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_5_dragon():  -- that's your mission.
+
+
+
+def run_5_dragon():
+    # go there
+    robot.straight(340)
+
+    # push lever
+    robot.turn(50)
+    robot.turn(-50)
+
+    # go back
+    robot.straight(-340)
+
 # ---- menu.py ----
 # RUN MENU  --  button-driven selector. You should not need to edit this file.
 #
-#   CENTER  -> run the armed run, then auto-arm the NEXT run
+#   CENTER  -> START the armed run; when it finishes, auto-arm the NEXT run
 #   LEFT    -> go back one run (redo the previous one)
 #   RIGHT   -> skip forward one run without running it
 #
-# Light:  GREEN = ready,  RED = running,  blinking ORANGE = a run was stopped.
+#   EMERGENCY STOP while a run is moving:
+#       press LEFT + RIGHT together. We move the hub's built-in stop onto that
+#       combo (in robot_config.py) so CENTER is free to START runs. The stop
+#       kills the program instantly; run it again to come back to the menu.
+#       (To power the hub off, hold CENTER for 3 seconds.)
+#
+# Light:  GREEN = ready,  RED = running,  blinking ORANGE = a run had an error.
 
 from pybricks.tools import wait
 
@@ -153,6 +202,7 @@ RUNS = [
     run_2_chicken,
     run_3_plow_run,
     run_4_banana_boat,
+    run_5_dragon,
 ]
 
 run_menu(RUNS)
