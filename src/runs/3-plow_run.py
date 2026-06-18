@@ -24,12 +24,8 @@ plow = Motor(Port.E)
 
 
 def run():
-    
-    plow.run_angle(200, 1000)
-    robot.straight(250)
-    robot.turn(45)
-    robot.turn(-45)
-    robot.straight(-250)
+    robot.straight(550)
+    robot.turn(90)
 
 
 # === STANDALONE (the builder removes this block when merging) ===
