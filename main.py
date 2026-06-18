@@ -115,6 +115,27 @@ def run_4_banana_boat():
     robot.straight(1000)
     robot.straight(-1000)
 
+# ---- runs/5-dragon.py ----
+# Run 5: Dragon (Sound Mixer)  --  drive to the lever, push it, come back.
+#
+# This file works BOTH ways:
+#   * Upload it ALONE to test just this mission  -> it runs by itself.
+#   * Run  python3 build.py  -> it becomes part of main.py with all the runs.
+# Edit ONLY the part inside  def run_5_dragon():  -- that's your mission.
+
+
+
+def run_5_dragon():
+    # go there
+    robot.straight(340)
+
+    # push lever
+    robot.turn(50)
+    robot.turn(-50)
+
+    # go back
+    robot.straight(-340)
+
 # ---- menu.py ----
 # RUN MENU  --  button-driven selector. You should not need to edit this file.
 #
@@ -180,6 +201,7 @@ RUNS = [
     run_2_chicken,
     run_3_plow_run,
     run_4_banana_boat,
+    run_5_dragon,
 ]
 
 run_menu(RUNS)

@@ -22,4 +22,5 @@ RUN_ORDER = [
     "2-chicken",
     "3-plow_run",
     "4-banana_boat",
+    "5-dragon",
 ]
