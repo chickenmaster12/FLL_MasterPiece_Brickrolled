@@ -19,11 +19,15 @@ After editing anything in `src/`, run **`python3 build.py`**, then upload `main.
 ## 🏁 At the table
 We run **one program**, not one slot per run. It steps through the runs with the hub buttons:
 
-- **Center** — run the run on the screen, drive back to base, auto-arm the next run
+- **Center** — start the run on the screen; when it finishes, the next auto-arms
 - **Left** — go back one run (redo)
 - **Right** — skip the current run
+- **Left + Right together** — emergency stop (kills the program)
 
-The hub screen shows the run number; 🟢 green = ready, 🔴 red = running, 🟠 blinking = a run was stopped safely.
+The hub screen shows the run number; 🟢 green = ready, 🔴 red = running, 🟠 blinking = a run had an error.
+
+> Each file in `src/runs/` also runs **by itself** — upload one to test a single mission.
+> (Center normally stops the program, so we move the stop to Left+Right; hold Center 3s to power off.)
 
 ## ✏️ Adding or changing runs
 **Read [HOW_TO_ADD_RUNS.md](HOW_TO_ADD_RUNS.md).** It's a step-by-step, kid-friendly

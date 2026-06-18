@@ -9,6 +9,12 @@ from pybricks.tools import wait
 
 hub = PrimeHub()
 
+# Free the CENTER button for our own use (start runs). By default the hub uses
+# CENTER to stop the program, which would block us from using it. We move the
+# built-in STOP to the LEFT+RIGHT buttons pressed together.
+# NOTE: to power the hub off now, hold CENTER for 3 seconds.
+hub.system.set_stop_button((Button.LEFT, Button.RIGHT))
+
 left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE)
 right_motor = Motor(Port.F)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=63, axle_track=112)

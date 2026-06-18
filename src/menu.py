@@ -1,10 +1,16 @@
 # RUN MENU  --  button-driven selector. You should not need to edit this file.
 #
-#   CENTER  -> run the armed run, then auto-arm the NEXT run
+#   CENTER  -> START the armed run; when it finishes, auto-arm the NEXT run
 #   LEFT    -> go back one run (redo the previous one)
 #   RIGHT   -> skip forward one run without running it
 #
-# Light:  GREEN = ready,  RED = running,  blinking ORANGE = a run was stopped.
+#   EMERGENCY STOP while a run is moving:
+#       press LEFT + RIGHT together. We move the hub's built-in stop onto that
+#       combo (in robot_config.py) so CENTER is free to START runs. The stop
+#       kills the program instantly; run it again to come back to the menu.
+#       (To power the hub off, hold CENTER for 3 seconds.)
+#
+# Light:  GREEN = ready,  RED = running,  blinking ORANGE = a run had an error.
 
 from robot_config import hub, robot, Button, Color
 from pybricks.tools import wait
